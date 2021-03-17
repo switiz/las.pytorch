@@ -128,6 +128,8 @@ PC사양 : Windows10, AMD 3600, RAM32, RTX 3080, Pytorch 1.8
 
 소요시간 : EPOCH당 8시간
 
+Train Epoch : 5
+
 CER : 0.40 (40%)
 
 
