@@ -1,0 +1,58 @@
+#traiin dataset
+root : C:/SpeechRecognitionDataset/Dataset/AI_hub
+script_data_path: C:/Users/sanma/PycharmProjects/las.pytorch/data/aihub/transcripts.txt
+vocab_path: C:/Users/sanma/PycharmProjects/las.pytorch/data/aihub/aihub_labels.csv
+
+#train
+batch_size: 8
+epochs: 5
+use_cuda: True
+cer_every: 500
+teacher_forcing_step: 0.005
+teacher_forcing_ratio: 0.99
+min_teacher_forcing_ratio: 0.7
+label_smoothing: 0.1
+
+#model_save_load
+resume: False
+save_every: 1
+#inference
+inference: False
+use_val_data: True
+weight_path: C:/Users/sanma/PycharmProjects/las.pytorch/weights/pretrained.pt
+
+#root : C:/SpeechRecognitionDataset/Dataset/AI_hub
+#script_data_path: C:/Users/sanma/PycharmProjects/deepspeech2.pytorch/data/aihub/transcripts.txt
+#vocab_path: C:/Users/sanma/PycharmProjects/deepspeech2.pytorch/data/aihub/aihub_labels.csv
+#model_save_path: C:/Users/sanma/PycharmProjects/deepspeech2.pytorch/data/runs/train.pt
+
+#validation
+validation_every: 1
+
+#input feature
+feature: logmelspectrogram
+n_mels : 40
+use_npy: False
+split_balance : 0.1
+
+#ENCODER
+encoder_hidden_dim : 256
+encoder_bidirectional: True
+encoder_rnn_type: LSTM
+num_encoder_layers: 3
+encoder_dropout_p: 0.1
+mask_conv: False
+
+#Decoder
+decoder_max_length: 150
+decoder_embedding_dim: 512
+decoder_hidden_dim: 512
+decoder_attn_mechanism: dot
+decoder_num_heads: 4
+decoder_num_layers: 2
+decoder_rnn_type: LSTM
+decoder_dropout_p: 0.3
+decoder_bidirectional: False
+decoder_use_beam: False
+
+
