@@ -12,9 +12,9 @@ DeepSpeech -> **LAS**-> LAS(SpecAgument) -> Transformer -> Conformer -> RnnTìˆœì
 
 Original git (Kospeech): https://github.com/sooftware/KoSpeech
 
-### Prev project
+### Kospeech Split project
 
--  DeepSpeech2:
+-  DeepSpeech2: https://github.com/switiz/deepspeech2.pytorch
 
 ### Note
  - KospoonSpeech preprocess code import
