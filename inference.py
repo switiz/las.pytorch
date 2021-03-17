@@ -46,12 +46,13 @@ def parse_audio(audio_path, audio_extension='pcm'):
         feature = torch.FloatTensor(feature).transpose(0, 1)
         max_seq_length = max(max_seq_length, feature.shape[0])
         features.append(feature)
+        if idx==15:
+            break
 
     #Todo Singile inference is not work
-    seqs = torch.zeros(2, max_seq_length, 40)
+    seqs = torch.zeros(16, max_seq_length, 40)
 
     for i in range(len(features)):
-        print(i)
         seq_length = features[i].size(0)
         seqs[i].narrow(0, 0, seq_length).copy_(features[i])
     return seqs
@@ -108,12 +109,33 @@ def inference(opt):
     print('-'*40)
     #print(feature.unsqueeze(0))
     timer.startlog('Inference Start')
-    model.eval()
-    y_hats = model.greedy_search(feature, input_length)
-    sentance = vocab.label_to_string(y_hats[0].cpu().detach().numpy())
-    print(sentance)
+    if custom_loader:
+        validation_on_epoch(custom_loader, vocab, model, device, timer, model_save_path='./runs')
+    else:
+        model.eval()
+        y_hats = model.greedy_search(feature, input_length)
+        sentance = vocab.label_to_string(y_hats[0].cpu().detach().numpy())
+        print(sentance)
     timer.endlog('Inference complete')
 
+def validation_on_epoch(val_loader, vocab, model, device, timer,model_save_path='./runs'):
+    timer.log('validation start')
+    model.eval()
+    progress_bar = tqdm(val_loader, ncols=110)
+    target_list = list()
+    predict_list = list()
+    cer = 0.0
+    for idx, data in enumerate(progress_bar):
+        inputs, targets, input_lengths, target_lengths = data
+        inputs = inputs.to(device)
+        targets = targets.to(device)
+        y_hats = model.greedy_search(inputs, input_lengths)  #targets = None, teacher_forceing_ratio =0.0
+        for i in range(y_hats.size(0)):
+            target_list.append(vocab.label_to_string(targets[i]))
+            predict_list.append(vocab.label_to_string(y_hats[i].cpu().detach().numpy()))
+    save_result(model_save_path, target_list, predict_list)
+    timer.log('validation complete')
+    return cer
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
