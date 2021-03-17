@@ -108,7 +108,7 @@ python train.py --resume
 ```
 
 ### Step 4 Inference
-[pretrained weight]()
+[pretrained weight](https://drive.google.com/file/d/1wb5E8ViS5WKv1P8ynVXaBb7VTdWVY0iU/view?usp=sharing)
 
 inference.py를 실행하면 되며 현재는 validation data를 이용하여 inference하도록 되어있습니다.
 
